@@ -40,7 +40,7 @@ namespace com.github.thelonedevil.RandomArtistCSharp {
 
         static void random() {
             if (artists.Count != 0) {
-                artist = artists.ElementAt(new Random().Next(artists.Count));
+                artist = artists[(new Random().Next(artists.Count))];
                 Console.WriteLine("Your random artist: " + artist);
             } else {
                 Console.WriteLine("No artists in the list! Please add some! ");
