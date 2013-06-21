@@ -1,50 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
 using System.IO;
-using System.Diagnostics;
 
-namespace com.github.thelonedevil.RandomArtistc# {
-    static class Program {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+namespace com.github.thelonedevil.RandomArtistCSharp {
+    class Program {
 
-        static List<string> artists = new List<string>();
-        static string artist = "test";
         static string path = "artists.txt";
-        // static Process process = new Process();
+        static List<string> artists = new List<string>();
+        static string artist;
 
         static void Main(string[] args) {
-            Console.WriteLine("test");
+            Console.Title = "Random Artist";
             Load();
-            bool h = false;
-            /* if (args.Length != 0 && args[0] == ("-h")) {
-                 h = true;
-             }
+            new1();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey(true);
 
-              if (process.MainWindowHandle != IntPtr.Zero  && !h) {
-                  Application.EnableVisualStyles();
-                  Application.SetCompatibleTextRenderingDefault(false);
-                  Application.Run(new Form1());
-              } else if (process.MainWindowHandle == IntPtr.Zero || h) {
-             new1();*/
-
-            //}
         }
-
-
         static void Load() {
             if (File.Exists(path)) {
                 using (StreamReader sr = File.OpenText(path)) {
                     string s = "";
                     while ((s = sr.ReadLine()) != null) {
-                        Console.WriteLine(s);
+                        artists.Add(s);
                     }
                 }
             } else if (!File.Exists(path)) {
@@ -52,18 +32,21 @@ namespace com.github.thelonedevil.RandomArtistc# {
             }
 
         }
-
         static void Save(string arg) {
-            if (!File.Exists(path)) {
-                using (StreamWriter sw = File.CreateText(path)) {
-                    sw.WriteLine(arg);
-
-                }
+            using (StreamWriter sw = File.AppendText(path)) {
+                sw.WriteLine(arg);
             }
         }
 
         static void random() {
-            artist = artists.ElementAt(new Random().Next(artists.Capacity));
+            if (artists.Count != 0) {
+                artist = artists.ElementAt(new Random().Next(artists.Count));
+                Console.WriteLine("Your random artist: " + artist);
+            } else {
+                Console.WriteLine("No artists in the list! Please add some! ");
+                new1();
+            }
+
         }
 
         static void add1() {
@@ -112,7 +95,5 @@ namespace com.github.thelonedevil.RandomArtistc# {
             }
 
         }
-
     }
 }
-
